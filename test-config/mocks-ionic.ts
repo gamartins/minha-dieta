@@ -1,5 +1,6 @@
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { HTTPResponse } from "@ionic-native/http";
 
 export class PlatformMock {
   public ready(): Promise<{String}> {
@@ -76,4 +77,25 @@ export class SplashScreenMock extends SplashScreen {
   hide() {
     return;
   }
+}
+
+export class HTTPMock {
+  get(url: string, parameters: any, headers: any): Promise<HTTPResponse> {
+    const hit01 = [ {
+      _index: "f762ef22-e660-434f-9071-a10ea6691c27",
+      _type: "item",
+      _id: "513fceb475b8dbbc21000fd3",
+      _score: 12.130143,
+      fields: {
+      item_id: "513fceb475b8dbbc21000fd3",
+      item_name: "Bananas, raw - 1 medium (7 to 7-7/8 long)",
+      brand_name: "USDA",
+      nf_serving_size_qty: 1,
+      nf_serving_size_unit: "serving" }}];
+    const result = { total_hits: 6043, max_score: 12.130143, hits: hit01 };
+    const data : HTTPResponse = { status: null, headers: null, data: JSON.stringify(result) }
+
+    return Promise.resolve(data);
+  }    
+
 }

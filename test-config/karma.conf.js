@@ -31,13 +31,14 @@ module.exports = function(config) {
       terminal: true
     },
 
-    reporters: ['kjhtml', 'dots'],
+    // reporters: ['kjhtml', 'dots', 'progress'],
+    reporters: ['progress'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: ['Chrome'],
-    singleRun: false
+    singleRun: true
   };
 
   config.set(_config);

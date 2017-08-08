@@ -34,8 +34,8 @@ describe('MyApp Component', () => {
     component = fixture.componentInstance;
   });
 
-  it('should be created', () => {
-    expect(component instanceof MyApp).toBe(true);
-  });
+  // it('should be created', () => {
+  //   expect(component instanceof MyApp).toBe(true);
+  // });
 
 });
