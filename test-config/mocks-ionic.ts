@@ -1,11 +1,13 @@
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HTTPResponse } from "@ionic-native/http";
+import { NavParams, NavController } from "ionic-angular";
 
 export class PlatformMock {
   public ready(): Promise<{String}> {
     return new Promise((resolve) => {
-      resolve('READY');
+      const msg: any = "READY";
+      resolve(msg);
     });
   }
 
@@ -79,23 +81,45 @@ export class SplashScreenMock extends SplashScreen {
   }
 }
 
-export class HTTPMock {
-  get(url: string, parameters: any, headers: any): Promise<HTTPResponse> {
-    const hit01 = [ {
-      _index: "f762ef22-e660-434f-9071-a10ea6691c27",
-      _type: "item",
-      _id: "513fceb475b8dbbc21000fd3",
-      _score: 12.130143,
-      fields: {
-      item_id: "513fceb475b8dbbc21000fd3",
-      item_name: "Bananas, raw - 1 medium (7 to 7-7/8 long)",
-      brand_name: "USDA",
-      nf_serving_size_qty: 1,
-      nf_serving_size_unit: "serving" }}];
-    const result = { total_hits: 6043, max_score: 12.130143, hits: hit01 };
-    const data : HTTPResponse = { status: null, headers: null, data: JSON.stringify(result) }
+export class NavParamsMock extends NavParams { 
+  public static instance(getReturn?: any): any {
+    let instance = jasmine.createSpyObj('NavParams', ['get']);
+    instance.get.and.returnValue(getReturn);
 
-    return Promise.resolve(data);
+    return instance;
+  }
+
+  public get(param: string): any {
+    return null;
+  }
+}
+
+export class HTTPMock {
+  private result;
+  
+  get(url: string, parameters: any, headers: any): Promise<HTTPResponse> {
+    
+    if (url.indexOf('search') !== -1 ) {
+      const hit01 = [{
+        _score: 12.130143,
+        fields: {
+        item_id: "513fceb475b8dbbc21000fd3",
+        item_name: 'Bananas, raw - 1 medium (7" to 7-7/8" long)',
+        brand_name: "USDA" }}];
+      this.result = { total_hits: 6043, max_score: 12.130143, hits: hit01 };
+    } 
+    
+    else if (url.indexOf('item') !== -1 ) {
+      this.result = {
+        item_id: "513fceb475b8dbbc21000fd3",
+        item_name: 'Bananas, raw - 1 medium (7" to 7-7/8" long)',
+        leg_loc_id: 328,
+        brand_name: "USDA" };
+    }
+
+    const response : HTTPResponse = { status: null, headers: null, data: JSON.stringify(this.result)}
+    
+    return Promise.resolve(response);   
   }    
 
 }

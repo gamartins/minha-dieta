@@ -9,10 +9,10 @@
 <ion-content padding>
   <ion-searchbar (ionInput)="getItens($event)"></ion-searchbar>
   
-  <ion-list *ngIf="this.items.length != 0">
-    <ion-item *ngFor="let item of items">
-      {{ item }}
-    </ion-item>
+   <ion-list *ngIf="this.items.length != 0"> 
+    <button ion-item *ngFor="let item of items" (click)="getFoodDetail(item.item_id)">
+      {{ item.item_name }}
+    </button>
   </ion-list>
 
 </ion-content>

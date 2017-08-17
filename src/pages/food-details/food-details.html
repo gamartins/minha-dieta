@@ -1,0 +1,44 @@
+<ion-header>
+
+  <ion-navbar>
+     <ion-title>{{ food.name }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col><div>Calories</div></ion-col>
+      <ion-col col-4>
+        <div text-right>{{ food.calories }}kcal</div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col><div>Proteins</div></ion-col>
+      <ion-col col-4>
+        <div text-right>{{ food.proteins }}g</div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col><div>Carbohydrates</div></ion-col>
+      <ion-col col-4>
+        <div text-right>{{ food.carbohydrates }}g</div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col><div>Total Fat</div></ion-col>
+      <ion-col col-4>
+        <div text-right>{{ food.total_fat}}g</div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col><div>Sodium</div></ion-col>
+      <ion-col col-4>
+        <div text-right>{{ food.sodium }}mg</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <p>* Values for {{ food.name }}.</p>
+</ion-content>
