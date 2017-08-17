@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { HTTP } from '@ionic-native/http';
 import { ApiConnectionData } from "./api.connection.data";
+import { StringFormaterService } from "./string.formater.service";
 
 @Injectable()
 export class FoodService {
@@ -12,7 +13,7 @@ export class FoodService {
   private apiUrl;
   private parameters;
 
-  constructor(public http: HTTP) { 
+  constructor(public http: HTTP, public sfService: StringFormaterService) { 
     this.appId = ApiConnectionData.APP_ID;
     this.appKey = ApiConnectionData.APP_KEY;
     this.apiUrl = ApiConnectionData.API_URL;
@@ -29,8 +30,10 @@ export class FoodService {
                       let items = [];
                       const hits = JSON.parse(data.data).hits;
                       hits.forEach(element => {
+                        let fullNameArray = this.sfService.createNameAndDescription(element.fields.item_name);
                         items.push({
-                          item_name: element.fields.item_name,
+                          item_name: fullNameArray.name,
+                          item_portion: fullNameArray.portion,
                           item_id: element.fields.item_id });
                       });
                       return Promise.resolve(items);

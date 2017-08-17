@@ -8,6 +8,7 @@ import { IonicModule, Platform } from "ionic-angular";
 import { FoodService } from "./food.service";
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
+import { StringFormaterService } from "./string.formater.service";
 
 describe('Food Service', () => {
     let fixture;
@@ -22,6 +23,7 @@ describe('Food Service', () => {
             ],
             providers: [
                 FoodService,
+                StringFormaterService,
                 { provide: StatusBar, useClass: StatusBarMock },
                 { provide: SplashScreen, useClass: SplashScreenMock },
                 { provide: Platform, useClass: PlatformMock },
@@ -36,10 +38,11 @@ describe('Food Service', () => {
         foodService = fixture.debugElement.injector.get(FoodService);
     });
 
-    it('Should get a list of food', fakeAsync(() => {
+    it('Should get a list of food with id, name and portion', fakeAsync(() => {
         const items = [{
             item_id: '513fceb475b8dbbc21000fd3',
-            item_name: 'Bananas, raw - 1 medium (7" to 7-7/8" long)'
+            item_name: 'Bananas, raw',
+            item_portion: '1 medium (7" to 7-7/8" long)'
         }];
 
         foodService.searchFood('banana').then(data => { 

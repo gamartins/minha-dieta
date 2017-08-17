@@ -9,6 +9,7 @@ import { HTTP } from '@ionic-native/http';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { FoodService } from "../services/food.service";
+import { StringFormaterService } from "../services/string.formater.service";
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { FoodService } from "../services/food.service";
     StatusBar,
     SplashScreen,
     FoodService,
+    StringFormaterService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
   ]
 })
