@@ -8,16 +8,12 @@ import { HTTP } from '@ionic-native/http';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { SearchPage } from "../pages/search/search";
 import { FoodService } from "../services/food.service";
-import { FoodDetailsPage } from "../pages/food-details/food-details";
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    SearchPage,
-    FoodDetailsPage,
+    HomePage
   ],
   imports: [
     BrowserModule,
@@ -26,9 +22,7 @@ import { FoodDetailsPage } from "../pages/food-details/food-details";
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
-    SearchPage,
-    FoodDetailsPage,
+    HomePage
   ],
   providers: [
     HTTP,

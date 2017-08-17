@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
 import { FoodService } from "../../services/food.service";
-import { NavController } from "ionic-angular";
+import { NavController, IonicPage } from "ionic-angular";
 import { FoodDetailsPage } from "../food-details/food-details";
 
+@IonicPage()
 @Component({
   selector: 'page-search',
   templateUrl: 'search.html',
@@ -20,7 +21,7 @@ export class SearchPage {
   }
 
   getFoodDetail(id: string){
-    this.navCtrl.push(FoodDetailsPage, { item_id: id});
+    this.navCtrl.push('FoodDetailsPage', { item_id: id});
   }
 
 }

@@ -3,6 +3,7 @@ import { NavParams, IonicPage } from 'ionic-angular';
 import { FoodService } from "../../services/food.service";
 import { Food } from "../../model/food";
 
+@IonicPage()
 @Component({
   selector: 'page-food-details',
   templateUrl: 'food-details.html',

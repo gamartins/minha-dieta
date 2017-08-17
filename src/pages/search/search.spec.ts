@@ -88,7 +88,7 @@ describe('SearchPage', () => {
       // Click to open FoodDetail
       spyOn(navCtrl, 'push');
       htmlElement.click();
-      expect(navCtrl.push).toHaveBeenCalledWith(FoodDetailsPage, { item_id: '513fceb475b8dbbc21000fd3'});
+      expect(navCtrl.push).toHaveBeenCalledWith('FoodDetailsPage', { item_id: '513fceb475b8dbbc21000fd3'});
     });
   }));
 
