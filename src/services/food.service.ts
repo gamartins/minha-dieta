@@ -56,7 +56,13 @@ export class FoodService {
     if (id && id.trim() != '') {
       return this.http.get(url, this.parameters, {})
                   .then(response => {
-                    const food = JSON.parse(response.data);
+                    let food = JSON.parse(response.data);
+                    let fullName:string = food.item_name;
+                    let name = this.sfService.createNameAndDescription(fullName).name;
+                    let portion = this.sfService.createNameAndDescription(fullName).portion;
+                    food.item_name = name;
+                    food.item_portion = portion;
+
                     return Promise.resolve(food);
                   })
                   .catch(error => { 

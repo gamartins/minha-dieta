@@ -32,6 +32,7 @@ export class FoodDetailsPage {
       this.food.carbohydrates = data.nf_total_carbohydrate;
       this.food.total_fat = data.nf_total_fat;
       this.food.sodium = data.nf_sodium;
+      this.food.portion = data.item_portion;
     }).catch( error => console.log(error) );
   }
 

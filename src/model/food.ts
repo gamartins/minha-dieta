@@ -5,5 +5,6 @@ export class Food {
                 public proteins?: number,
                 public carbohydrates?: number,
                 public total_fat?: number,
-                public sodium?: number) { }
+                public sodium?: number,
+                public portion?: string) { }
 }

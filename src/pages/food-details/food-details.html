@@ -6,39 +6,28 @@
 
 </ion-header>
 
-
 <ion-content padding>
-  <ion-grid>
-    <ion-row>
-      <ion-col><div>Calories</div></ion-col>
-      <ion-col col-4>
-        <div text-right>{{ food.calories }}kcal</div>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col><div>Proteins</div></ion-col>
-      <ion-col col-4>
-        <div text-right>{{ food.proteins }}g</div>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col><div>Carbohydrates</div></ion-col>
-      <ion-col col-4>
-        <div text-right>{{ food.carbohydrates }}g</div>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col><div>Total Fat</div></ion-col>
-      <ion-col col-4>
-        <div text-right>{{ food.total_fat}}g</div>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col><div>Sodium</div></ion-col>
-      <ion-col col-4>
-        <div text-right>{{ food.sodium }}mg</div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <p>* Values for {{ food.name }}.</p>
+  <ion-list>
+    <div ion-item>
+      <h2>Calories</h2>
+      <h2 item-end>{{ food.calories }}kcal</h2>
+    </div>
+    <div ion-item>
+      <h2>Proteins</h2>
+      <h2 item-end>{{ food.proteins }}g</h2>
+    </div>
+    <div ion-item>
+      <h2>Carbohydrates</h2>
+      <h2 item-end>{{ food.carbohydrates }}g</h2>
+    </div>
+    <div ion-item>
+      <h2>Total Fat</h2>
+      <h2 item-end>{{ food.total_fat}}g</h2>
+    </div>
+    <div ion-item>
+      <h2>Sodium</h2>
+      <h2 item-end>{{ food.sodium }}mg</h2>
+    </div>
+  </ion-list>
+  <p *ngIf="food.portion != ''" text-right>* Values for {{ food.portion }}</p>
 </ion-content>

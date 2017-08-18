@@ -51,13 +51,15 @@ describe('Food Service', () => {
         });
     }));
 
-    it('Should get a food name based on her id', fakeAsync(() => {
+    it('Should get a food name and portion based on her id', fakeAsync(() => {
         const id = '513fceb475b8dbbc21000fd3';
-        const name = 'Bananas, raw - 1 medium (7" to 7-7/8" long)';
+        const name = 'Bananas, raw';
+        const food_portion = '1 medium (7" to 7-7/8" long)'
 
         foodService.getFood(id).then(food => {
             tick();
             expect(food.item_name).toEqual(name);
+            expect(food.item_portion).toEqual(food_portion)
         });
         
     }));
