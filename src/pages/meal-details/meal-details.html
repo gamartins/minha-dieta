@@ -1,0 +1,38 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Meal Details</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card id="resume_card">
+    <ion-card-header text-center>{{ getTotalCalories() }} KCal</ion-card-header>
+    <hr>
+    <ion-grid>
+      <ion-row>
+        <ion-col text-center>Carbo<br>{{ getTotalCarbo() }}g</ion-col>
+        <ion-col text-center>Proteins<br>{{ getTotalProteins() }}g</ion-col>
+        <ion-col text-center>Fat<br>{{ getTotalFat() }}g</ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+
+  <ion-list *ngIf="meal">
+    <ion-item *ngFor="let food of meal">
+      <h2>{{ food.name }}</h2>
+      <h2 item-end>{{ food.calories }} kcal</h2>
+      <a item-end (click)="removeFood(food)">
+        <ion-icon name="trash"></ion-icon>  
+      </a>
+    </ion-item>
+  </ion-list>
+  
+  <ion-fab bottom right>
+    <button ion-fab (click)="navCtrl.push('SearchPage')">
+      <ion-icon name="search"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>

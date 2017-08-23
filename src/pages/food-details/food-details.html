@@ -30,4 +30,10 @@
     </div>
   </ion-list>
   <p *ngIf="food.portion != ''" text-right>* Values for {{ food.portion }}</p>
+
+  <ion-fab bottom right>
+    <button ion-fab (click)="addFoodToMeal()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

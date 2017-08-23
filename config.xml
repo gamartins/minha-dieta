@@ -3,7 +3,7 @@
     <name>Minha Dieta</name>
     <description>Um app para criar suas dietas</description>
     <author email="gabriel@martinsdev.com.br">MartinsDev</author>
-    <content original-src="index.html" src="http://169.254.241.226:8100" />
+    <content original-src="index.html" src="http://192.168.43.186:8100" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
     <allow-navigation href="http://192.168.15.146:8100" />
@@ -24,7 +24,7 @@
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
     <platform name="android">
-        <preference name="loadUrlTimeoutValue" value="700000" />
+        <preference name="loadUrlTimeoutValue" value="70000" />
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
         <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />
@@ -80,6 +80,7 @@
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
     </platform>
     <allow-navigation href="http://169.254.241.226:8100" />
+    <allow-navigation href="http://192.168.43.186:8100" />
     <engine name="android" spec="^6.2.3" />
     <engine name="browser" spec="^4.1.0" />
     <plugin name="cordova-plugin-console" spec="^1.0.7" />

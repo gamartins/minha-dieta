@@ -10,6 +10,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { FoodService } from "../services/food.service";
 import { StringFormaterService } from "../services/string.formater.service";
+import { MealService } from "../services/meal/meal.service";
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { StringFormaterService } from "../services/string.formater.service";
     StatusBar,
     SplashScreen,
     FoodService,
+    MealService,
     StringFormaterService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
   ]

@@ -6,11 +6,17 @@ import { IonicModule, Platform } from 'ionic-angular/index';
 import { NavParams } from "ionic-angular/navigation/nav-params";
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { PlatformMock, StatusBarMock, SplashScreenMock, NavParamsMock } from '../../../test-config/mocks-ionic';
+import { PlatformMock, 
+         StatusBarMock, 
+         SplashScreenMock, 
+         NavParamsMock, 
+         NavControllerMock } from '../../../test-config/mocks-ionic';
 
 import { FoodDetailsPage } from './food-details';
 import { FoodService } from "../../services/food.service";
 import { Food } from "../../model/food";
+import { MealService } from "../../services/meal/meal.service";
+import { NavController } from "ionic-angular/navigation/nav-controller";
 
 describe('FoodDetailsPage', () => {
   let de: DebugElement;
@@ -25,7 +31,9 @@ describe('FoodDetailsPage', () => {
         IonicModule.forRoot(FoodDetailsPage)
       ],
       providers: [
+        { provide: MealService, useClass: MealServiceMock },
         { provide: NavParams, useFactory: () => NavParamsMock.instance()},
+        { provide: NavController, useFactory: () => NavControllerMock.instance()},
         { provide: FoodService, useClass: FoodServiceMock },
         { provide: Platform, useClass: PlatformMock},
         { provide: StatusBar, useClass: StatusBarMock },
@@ -134,6 +142,22 @@ describe('FoodDetailsPage', () => {
     });
   }));
 
+  it('should show a add FAButton', () => {
+    htmlElement = fixture.debugElement.query(By.css('ion-fab button')).nativeElement;
+    expect(htmlElement).toBeDefined();
+  });
+
+  it('should add food to the meal when click add button', () => {
+    let spyHtml = spyOn(comp, 'addFoodToMeal').and.callThrough();
+    let spyComp = spyOn(comp.mealService, 'addFood').and.callThrough();
+    
+    htmlElement = fixture.debugElement.query(By.css('ion-fab button')).nativeElement;
+    htmlElement.click();
+
+    expect(spyHtml).toHaveBeenCalled();
+    expect(spyComp).toHaveBeenCalledWith(comp.food)
+  })
+
 });
 
 export class FoodServiceMock {
@@ -167,4 +191,8 @@ export class FoodServiceMock {
 
     return Promise.reject(data);
   }
+}
+
+export class MealServiceMock {
+  addFood(food: Food) {}
 }
