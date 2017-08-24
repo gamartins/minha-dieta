@@ -1,12 +1,26 @@
 import { Injectable } from '@angular/core';
+import { Storage } from '@ionic/storage';
 import { Food } from "../../model/food";
 
 @Injectable()
 export class MealService {
-    foodList: Array<Food>;
+    foodList: Array<Food> = [];
     
-    constructor() {
-        this.foodList = [];
+    constructor(private storage: Storage) {
+        this.storage.get('meal').then(val => {
+            if (val != null ) {
+                let list = JSON.parse(val)
+                list.forEach(item => {
+                    let food = new Food(item.val, item.name, item.calories, 
+                        item.proteins, item.carbohydrates, item.total_fat, item.sodium, item.portion);
+                    this.foodList.push(food)
+                });
+            }
+        }).catch(error => console.log(error))
+    }
+
+    private saveInStorage() {
+        this.storage.set('meal', JSON.stringify(this.foodList))
     }
 
     public getFood(): Array<Food> {
@@ -14,7 +28,9 @@ export class MealService {
     }
 
     public addFood(food: Food) {
-        return this.foodList.push(food);
+        this.foodList.push(food);
+        this.saveInStorage()
+        return this.foodList.length
     }
 
     public removeFood(foodId: string) {
@@ -30,6 +46,8 @@ export class MealService {
         if (positionInArray != -1 ) {
             this.foodList.splice(positionInArray, 1);
         }
+
+        this.saveInStorage()
     }
 
 }

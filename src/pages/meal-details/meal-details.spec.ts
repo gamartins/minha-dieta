@@ -24,12 +24,12 @@ describe('MealDetailsPage', () => {
         imports: [
           IonicModule.forRoot(MealDetailsPage)
         ],
-        providers: [    
+        providers: [
+            { provide: MealService, useClass: MealServiceMock },
             { provide: NavController, useFactory: () => NavControllerMock.instance()},
             { provide: NavParams, useFactory: () => NavParamsMock.instance()},
             { provide: Platform, useClass: PlatformMock},
             { provide: StatusBar, useClass: StatusBarMock },
-            MealService
         ]
       });
   
@@ -51,7 +51,6 @@ describe('MealDetailsPage', () => {
     });
 
     it('Should show a list of foods and his calories', async(() => {
-        comp.mealService.addFood(new Food('1234', 'Milk', 42));
         fixture.whenStable().then(() => {
             fixture.detectChanges();
 
@@ -74,25 +73,19 @@ describe('MealDetailsPage', () => {
         })
     }))
 
-    it('Should remove a food when clicked in the trash', () => {
-        comp.mealService.addFood(new Food('1234', 'Milk', 42)),
-        comp.mealService.addFood(new Food('5678', 'Couscous', 112))
-        comp.mealService.addFood(new Food('9012', 'Boiled Egg', 155))
-        comp.mealService.addFood(new Food('3456', 'Banana', 89))
+    it('Should call removeFood when clicked in the trash', () => {
+        let spy = spyOn(comp.mealService, 'removeFood').and.callThrough();
 
-        let expected = [
+        comp.meal = [
+            new Food('1234', 'Milk', 42),
             new Food('5678', 'Couscous', 112),
             new Food('9012', 'Boiled Egg', 155),
-            new Food('3456', 'Banana', 89)
-        ];
-        
-        fixture.detectChanges();
-        let spy = spyOn(comp.mealService, 'removeFood').and.callThrough();
+            new Food('3456', 'Banana', 89)]
+        fixture.detectChanges()
         htmlElement = fixture.debugElement.query(By.css('ion-list ion-item:nth-child(1) a')).nativeElement;
         htmlElement.click();
 
         expect(spy).toHaveBeenCalledWith('1234')
-        expect(comp.meal).toEqual(expected);
     });
 
     it('Should show the total amount of calories', () => {
@@ -148,3 +141,9 @@ describe('MealDetailsPage', () => {
         expect(htmlElement.textContent.trim()).toContain('Fat12.5g');
     });
 });
+
+class MealServiceMock {
+    getFood() { return [new Food('1234', 'Milk', 42), new Food('5678', 'Meat', 42)] }
+    addFood(food: Food) { }
+    removeFood() { }
+}
