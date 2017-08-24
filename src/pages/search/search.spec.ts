@@ -8,7 +8,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { PlatformMock, StatusBarMock, SplashScreenMock } from '../../../test-config/mocks-ionic';
 
 import { SearchPage } from './search';
-import { FoodService } from "../../services/food.service";
+import { FoodService } from "../../services/food/food.service";
 import { FoodDetailsPage } from "../food-details/food-details";
 
 describe('SearchPage', () => {

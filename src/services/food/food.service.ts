@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import { HTTP } from '@ionic-native/http';
-import { ApiConnectionData } from "./api.connection.data";
-import { StringFormaterService } from "./string.formater.service";
+import { ApiConnectionData } from "../api.connection.data";
+import { StringFormaterService } from "../string/string.formater.service";
 
 @Injectable()
 export class FoodService {

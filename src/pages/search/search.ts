@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { FoodService } from "../../services/food.service";
+import { FoodService } from "../../services/food/food.service";
 import { NavController, IonicPage } from "ionic-angular";
 import { FoodDetailsPage } from "../food-details/food-details";
 

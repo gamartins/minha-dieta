@@ -8,8 +8,8 @@ import { HTTP } from '@ionic-native/http';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { FoodService } from "../services/food.service";
-import { StringFormaterService } from "../services/string.formater.service";
+import { FoodService } from "../services/food/food.service";
+import { StringFormaterService } from "../services/string/string.formater.service";
 import { MealService } from "../services/meal/meal.service";
 import { IonicStorageModule } from '@ionic/storage';
 

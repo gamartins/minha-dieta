@@ -13,7 +13,7 @@ import { PlatformMock,
          NavControllerMock } from '../../../test-config/mocks-ionic';
 
 import { FoodDetailsPage } from './food-details';
-import { FoodService } from "../../services/food.service";
+import { FoodService } from "../../services/food/food.service";
 import { Food } from "../../model/food";
 import { MealService } from "../../services/meal/meal.service";
 import { NavController } from "ionic-angular/navigation/nav-controller";
