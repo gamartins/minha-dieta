@@ -5,12 +5,12 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-card>
-      <ion-card-header (click)="pushMealDetailsPage()">
+  <ion-card *ngFor="let meal of mealList; let i = index">
+      <ion-card-header (click)="pushMealDetailsPage(i)">
         Café da Manhã
       </ion-card-header>
       <ion-card-content>
-        {{ getFoodInfo().length }} alimentos
+        {{ getAmountFood(i) }} alimentos
         <button ion-fab mini (click)="pushSearchPage()">
           <ion-icon name="add"></ion-icon>
         </button>

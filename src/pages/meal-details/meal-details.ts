@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Food } from "../../model/food";
 import { MealService } from "../../services/meal/meal.service";
+import { Meal } from "../../model/meal";
 
 @IonicPage()
 @Component({
@@ -9,22 +10,28 @@ import { MealService } from "../../services/meal/meal.service";
   templateUrl: 'meal-details.html',
 })
 export class MealDetailsPage {
-  meal: Food[];
+  meal: Meal;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public mealService: MealService) {
-      this.meal = mealService.getFood()
+    public mealService: MealService) {  }
+
+  ionViewWillEnter(){
+    let mealId = this.mealService.getMealIds().then(ids => {
+      this.mealService.getMeal(mealId[0]).then(meal => {
+        this.meal = meal
+      })
+    })
   }
 
   removeFood(food: Food) {
-    this.mealService.removeFood(food.id)
+    this.mealService.removeFood(this.meal.id, food.id)
   }
 
   getTotalCalories(){
     let totalCalories: number = 0;
-    this.meal.forEach(food => {
+    this.meal.foodList.forEach(food => {
       totalCalories += food.calories;
     });
 
@@ -33,7 +40,7 @@ export class MealDetailsPage {
 
   getTotalCarbo(){
     let totalCarbo: number = 0;
-    this.meal.forEach(food => {
+    this.meal.foodList.forEach(food => {
       totalCarbo += food.carbohydrates;
     });
 
@@ -42,7 +49,7 @@ export class MealDetailsPage {
 
   getTotalProteins(){
     let totalProteins: number = 0;
-    this.meal.forEach(food => {
+    this.meal.foodList.forEach(food => {
       totalProteins += food.proteins;
     });
 
@@ -51,9 +58,11 @@ export class MealDetailsPage {
 
   getTotalFat() {
     let totalFat: number = 0;
-    this.meal.forEach(food => {
-      totalFat += food.total_fat;
-    });
+    if(this.meal.foodList.length != 0) {
+      this.meal.foodList.forEach(food => {
+        totalFat += food.total_fat;
+      });
+    }
 
     return this.round(totalFat);
   }

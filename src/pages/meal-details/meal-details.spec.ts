@@ -11,6 +11,7 @@ import { By } from "@angular/platform-browser";
 import { Food } from "../../model/food";
 import { async } from "@angular/core/testing";
 import { MealService } from "../../services/meal/meal.service";
+import { Meal } from "../../model/meal";
 
 describe('MealDetailsPage', () => {
     let de: DebugElement;
@@ -18,7 +19,7 @@ describe('MealDetailsPage', () => {
     let htmlElement: HTMLElement;
     let fixture: ComponentFixture<MealDetailsPage>;
   
-    beforeEach(() => {
+    beforeEach(async(() => {
       TestBed.configureTestingModule({
         declarations: [MealDetailsPage],
         imports: [
@@ -33,14 +34,23 @@ describe('MealDetailsPage', () => {
         ]
       });
   
-      fixture = TestBed.createComponent(MealDetailsPage);
-      comp = fixture.componentInstance;
-    });
+    }));
 
-    it('Should show a FABButton on the screen', () => {
+    beforeEach(() => {
+        fixture = TestBed.createComponent(MealDetailsPage);
+        comp = fixture.componentInstance;
+        comp.meal = new Meal('123456', [
+            new Food('1234', 'Milk', 42, 3.4, 5, 1),
+            new Food('5678', 'Couscous', 112, 3.8, 23, 0.2),
+            new Food('9012', 'Boiled Egg', 155, 13, 1.1, 11),
+            new Food('3456', 'Banana', 89, 1.1, 23, 0.3)])
+        fixture.detectChanges()
+    })
+
+    it('Should show a FABButton on the screen', async(() => {
         htmlElement = fixture.debugElement.query(By.css('ion-fab button')).nativeElement;
         expect(htmlElement).toBeDefined();
-    })
+    }))
 
     it('Should open SearchFoodPage when click the FabButton', () => {
         let navCtrl: NavController = fixture.debugElement.injector.get(NavController);
@@ -75,75 +85,37 @@ describe('MealDetailsPage', () => {
 
     it('Should call removeFood when clicked in the trash', () => {
         let spy = spyOn(comp.mealService, 'removeFood').and.callThrough();
-
-        comp.meal = [
-            new Food('1234', 'Milk', 42),
-            new Food('5678', 'Couscous', 112),
-            new Food('9012', 'Boiled Egg', 155),
-            new Food('3456', 'Banana', 89)]
-        fixture.detectChanges()
         htmlElement = fixture.debugElement.query(By.css('ion-list ion-item:nth-child(1) a')).nativeElement;
         htmlElement.click();
 
-        expect(spy).toHaveBeenCalledWith('1234')
+        expect(spy).toHaveBeenCalledWith('123456','1234')
     });
 
     it('Should show the total amount of calories', () => {
-        comp.meal = [
-            new Food('1234', 'Milk', 42),
-            new Food('5678', 'Couscous', 112),
-            new Food('9012', 'Boiled Egg', 155),
-            new Food('3456', 'Banana', 89)
-        ];
-        fixture.detectChanges();
-
         htmlElement = fixture.debugElement.query(By.css('ion-card-header')).nativeElement;
-
         expect(htmlElement.textContent).toContain('398 KCal');
     });
 
     it('Should show the total amount of carbohydrates', () => {
-        comp.meal = [
-            new Food('1234', 'Milk', 42, 3.4, 5, 1),
-            new Food('5678', 'Couscous', 112, 3.8, 23, 0.2),
-            new Food('9012', 'Boiled Egg', 155, 13, 1.1, 11),
-            new Food('3456', 'Banana', 89, 1.1, 23, 0.3)
-        ];
-        fixture.detectChanges();
-
         htmlElement = fixture.debugElement.query(By.css('ion-col:nth-child(1)')).nativeElement;
         expect(htmlElement.textContent.trim()).toContain('Carbo52.1g');
     });
 
     it('Should show the total amount of proteins', () => {
-        comp.meal = [
-            new Food('1234', 'Milk', 42, 3.4, 5, 1),
-            new Food('5678', 'Couscous', 112, 3.8, 23, 0.2),
-            new Food('9012', 'Boiled Egg', 155, 13, 1.1, 11),
-            new Food('3456', 'Banana', 89, 1.1, 23, 0.3)
-        ];
-        fixture.detectChanges();
-
         htmlElement = fixture.debugElement.query(By.css('ion-col:nth-child(2)')).nativeElement;
         expect(htmlElement.textContent.trim()).toContain('Proteins21.3g');
     });
 
     it('Should show the total amount of fat', () => {
-        comp.meal = [
-            new Food('1234', 'Milk', 42, 3.4, 5, 1),
-            new Food('5678', 'Couscous', 112, 3.8, 23, 0.2),
-            new Food('9012', 'Boiled Egg', 155, 13, 1.1, 11),
-            new Food('3456', 'Banana', 89, 1.1, 23, 0.3)
-        ];
-        fixture.detectChanges();
-        
         htmlElement = fixture.debugElement.query(By.css('ion-col:nth-child(3)')).nativeElement;
         expect(htmlElement.textContent.trim()).toContain('Fat12.5g');
     });
 });
 
 class MealServiceMock {
-    getFood() { return [new Food('1234', 'Milk', 42), new Food('5678', 'Meat', 42)] }
+    mealList = [ new Meal('123456', []) ]
+    getMealIds(): Promise<string[]> { return Promise.resolve(['123456']) }
+    getMeal(mealId: string):Promise<Meal> { return Promise.resolve(this.mealList[0]) }
     addFood(food: Food) { }
     removeFood() { }
 }

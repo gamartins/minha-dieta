@@ -148,19 +148,20 @@ describe('FoodDetailsPage', () => {
   });
 
   it('should add food to the meal when click add button', () => {
+    spyOn(comp.mealService, 'getMealIds').and.returnValue(['123456'])
     let spyHtml = spyOn(comp, 'addFoodToMeal').and.callThrough();
-    let spyComp = spyOn(comp.mealService, 'addFood').and.callThrough();
+    let spyComp = spyOn(comp.mealService, 'addFood')
     
     htmlElement = fixture.debugElement.query(By.css('ion-fab button')).nativeElement;
     htmlElement.click();
 
     expect(spyHtml).toHaveBeenCalled();
-    expect(spyComp).toHaveBeenCalledWith(comp.food)
+    expect(spyComp).toHaveBeenCalledWith(comp.meal_id, comp.food)
   })
 
 });
 
-export class FoodServiceMock {
+class FoodServiceMock {
   getFood(value: string): Promise<any> {
     let data;
     if (value == '513fceb475b8dbbc21000fd3') {
@@ -193,6 +194,7 @@ export class FoodServiceMock {
   }
 }
 
-export class MealServiceMock {
-  addFood(food: Food) {}
+class MealServiceMock {
+  addFood(mealId:string, food: Food) { return 1 }
+  getMealIds() { ['123456'] }
 }

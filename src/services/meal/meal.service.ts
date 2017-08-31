@@ -1,53 +1,103 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Food } from "../../model/food";
+import { Meal } from "../../model/meal";
 
 @Injectable()
 export class MealService {
-    foodList: Array<Food> = [];
-    
-    constructor(private storage: Storage) {
-        this.storage.get('meal').then(val => {
-            if (val != null ) {
-                let list = JSON.parse(val)
-                list.forEach(item => {
-                    let food = new Food(item.val, item.name, item.calories, 
-                        item.proteins, item.carbohydrates, item.total_fat, item.sodium, item.portion);
-                    this.foodList.push(food)
+    constructor(public storage: Storage) {
+    }
+
+    public getMealList(): Promise<Meal[]> {
+        return this.storage.keys().then(val => {
+            if (val.length > 0){
+                return this.populateMeals(val)
+            } else {
+                return Promise.resolve(this.generateRandomMeals())
+            }
+        }).catch(error => {
+            console.log(error)
+            return Promise.reject(null)
+        })
+    }
+
+    private generateRandomMeals(): Meal[] {
+        let randomMeals: Array<Meal> = []
+
+        for (var index = 0; index < 6; index++) {
+            const random_key = Math.random().toString(36).substring(2, 15)
+            const new_meal = new Meal(random_key, [])
+            randomMeals.push(new_meal)
+            this.saveInStorage(new_meal)
+        }
+        
+        return randomMeals
+    }
+
+    private populateMeals(val: any): Promise<Meal[]> {
+        let populatedMeals: Array<Meal> = []
+
+        return this.storage.forEach(val => {
+            const item = JSON.parse(val)
+            const meal = new Meal(item.id, []) 
+            if(item.foodList.length > 0 ) {
+                item.foodList.forEach(food => {
+                meal.foodList.push(new Food(food.id, food.name))
                 });
             }
-        }).catch(error => console.log(error))
+            populatedMeals.push(meal)
+        }).then(() => {
+            return Promise.resolve(populatedMeals)
+        })
     }
 
-    private saveInStorage() {
-        this.storage.set('meal', JSON.stringify(this.foodList))
+    private saveInStorage(meal: Meal) {
+        this.storage.set(meal.id, JSON.stringify(meal))
     }
 
-    public getFood(): Array<Food> {
-        return this.foodList;
+    public getMeal(mealId: string): Promise<Meal> {
+        return this.storage.get(mealId).then(val => {
+            const item = JSON.parse(val)
+            const meal: Meal = new Meal(item.id, [])
+            item.foodList.forEach(food => {
+                meal.foodList.push(new Food(food.id, food.name))
+            });
+            return meal
+        })
     }
 
-    public addFood(food: Food) {
-        this.foodList.push(food);
-        this.saveInStorage()
-        return this.foodList.length
+    public addFood(mealId: string, food: Food) {
+        this.getMeal(mealId).then(meal => {
+            meal.foodList.push(food)
+            this.saveInStorage(meal)
+        })
     }
 
-    public removeFood(foodId: string) {
+    public removeFood(mealId: string, foodId: string) {
         let positionInArray = -1
-        for (var index = 0; index < this.foodList.length; index++) {
-            var food = this.foodList[index];
-            if (food.id == foodId) {
-                positionInArray = index
-                break
+        this.getMeal(mealId).then(val => {
+            const meal: Meal = val
+            for (var index = 0; index < meal.foodList.length; index++) {
+                var food = meal.foodList[index];
+                if (food.id == foodId) {
+                    positionInArray = index
+                    break
+                }
             }
-        }
 
-        if (positionInArray != -1 ) {
-            this.foodList.splice(positionInArray, 1);
-        }
+            if (positionInArray != -1 ) {
+                meal.foodList.splice(positionInArray, 1);
+            }
 
-        this.saveInStorage()
+            this.saveInStorage(meal)
+        })
+    }
+
+    public getMealIds(): Promise<string[]> {
+        return this.storage.keys().then(val => {
+            const mealIds: string[] = val
+            return mealIds
+        })
     }
 
 }

@@ -12,6 +12,7 @@ import { MealService } from "../../services/meal/meal.service";
 export class FoodDetailsPage {
   public item_id: string;
   public food: Food;
+  public meal_id: string;
 
   constructor(
     public navParams: NavParams,
@@ -42,7 +43,8 @@ export class FoodDetailsPage {
   }
 
   addFoodToMeal(){
-    this.mealService.addFood(this.food)
+    this.meal_id = this.mealService.getMealIds()[0]
+    this.mealService.addFood('123456', this.food)
     this.navCtlr.pop();
   }
 

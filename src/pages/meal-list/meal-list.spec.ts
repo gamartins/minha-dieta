@@ -11,6 +11,9 @@ import { By } from "@angular/platform-browser";
 import { async } from "@angular/core/testing";
 import { MealService } from "../../services/meal/meal.service";
 import { Food } from "../../model/food";
+import { Meal } from "../../model/meal";
+import { fakeAsync } from "@angular/core/testing";
+import { tick } from "@angular/core/testing";
 
 describe('MealListPage', () => {
   let comp: MealListPage;
@@ -47,6 +50,9 @@ describe('MealListPage', () => {
   })
 
   it('should open SearchPage when click the add button', () => {
+    comp.mealList.push(new Meal('123456', []))
+    fixture.detectChanges()
+
     htmlElement = fixture.debugElement.query(By.css('ion-card-content button')).nativeElement
     htmlElement.click()
 
@@ -55,6 +61,9 @@ describe('MealListPage', () => {
   })
 
   it('should open MealDetailsPage when click the meal name', () => {
+    comp.mealList.push(new Meal('123456', []))
+    fixture.detectChanges()
+    
     htmlElement = fixture.debugElement.query(By.css('ion-card-header')).nativeElement
     htmlElement.click()
 
@@ -62,19 +71,25 @@ describe('MealListPage', () => {
     expect(navCtrl.push).toHaveBeenCalled()
   })
 
-  it('should show how many foods are in the meal', () => {
-    comp.getFoodInfo()
+  it('should show how many foods are in the meal', fakeAsync(() => {
+    comp.mealList = [new Meal('123456', [ new Food('123', 'Banana'), new Food('456', 'Milk')])]
     fixture.detectChanges()
+    
     htmlElement = fixture.debugElement.query(By.css('ion-card-content')).nativeElement
     expect(htmlElement.textContent).toContain('2 alimentos')
-  })
+  }))
 });
 
-class MealServiceMock { 
-  foodList: Array<Food> = [
-    new Food('123', 'Banana'),
-    new Food('456', 'Milk')
-  ]
-
-  getFood() { return this.foodList }
+class MealServiceMock {
+  getMealIds(): Promise<string[]> { return Promise.resolve(['123456']) }
+  getMeal(mealId: string): Promise<Meal> { 
+    return Promise.resolve(
+      new Meal('123456', [ new Food('123', 'Banana'), new Food('456', 'Milk')])
+    )
+  }
+  getMealList(): Promise<Meal[]> {
+    return Promise.resolve(
+      [ new Meal('123456', [ new Food('123', 'Banana'), new Food('456', 'Milk')])]
+    )
+  }
 }
