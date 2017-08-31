@@ -18,8 +18,8 @@ export class MealDetailsPage {
     public mealService: MealService) {  }
 
   ionViewWillEnter(){
-    let mealId = this.mealService.getMealIds().then(ids => {
-      this.mealService.getMeal(mealId[0]).then(meal => {
+    this.mealService.getMealIds().then(ids => {
+      this.mealService.getMeal(ids[0]).then(meal => {
         this.meal = meal
       })
     })
@@ -31,37 +31,45 @@ export class MealDetailsPage {
 
   getTotalCalories(){
     let totalCalories: number = 0;
-    this.meal.foodList.forEach(food => {
-      totalCalories += food.calories;
-    });
+    if (this.meal != null ) {
+      this.meal.foodList.forEach(food => {
+        totalCalories += food.calories;
+      });
+    }
 
     return this.round(totalCalories);
   }
 
   getTotalCarbo(){
     let totalCarbo: number = 0;
-    this.meal.foodList.forEach(food => {
-      totalCarbo += food.carbohydrates;
-    });
+    if (this.meal != null ) {
+      this.meal.foodList.forEach(food => {
+        totalCarbo += food.carbohydrates;
+      });
+    }
 
     return this.round(totalCarbo);
   }
 
   getTotalProteins(){
     let totalProteins: number = 0;
-    this.meal.foodList.forEach(food => {
-      totalProteins += food.proteins;
-    });
+    if (this.meal != null ) {
+      this.meal.foodList.forEach(food => {
+        totalProteins += food.proteins;
+      });
+    }
 
     return this.round(totalProteins);
   }
 
   getTotalFat() {
     let totalFat: number = 0;
-    if(this.meal.foodList.length != 0) {
-      this.meal.foodList.forEach(food => {
-        totalFat += food.total_fat;
-      });
+    if (this.meal != null ) {
+      if(this.meal.foodList.length != 0) {
+        this.meal.foodList.forEach(food => {
+          totalFat += food.total_fat;
+        });
+      }
     }
 
     return this.round(totalFat);
