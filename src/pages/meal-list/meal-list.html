@@ -5,7 +5,10 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-card *ngFor="let meal of mealList; let i = index">
+  <nutrinfo-card [calories]="totalCalories" [carbo]="totalCarbo" [protein]="totalProtein" [fat]="totalFat">
+  </nutrinfo-card>
+
+  <ion-card *ngFor="let meal of mealList; let i = index" class="meal">
       <ion-card-content class="meal-amount" >
         <ion-row>
           <ion-col class="meal-info" (click)="pushMealDetailsPage(meal.id)">

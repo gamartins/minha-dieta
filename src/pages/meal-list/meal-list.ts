@@ -11,13 +11,29 @@ import { Meal } from "../../model/meal";
 })
 export class MealListPage {
   mealList: Array<Meal> = []
+  totalCalories: number = 0
+  totalCarbo: number = 0
+  totalProtein: number = 0
+  totalFat: number = 0
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               public mealService: MealService) { }
   
   ionViewWillEnter() {
-    this.mealService.getMealList().then(val => this.mealList = val)
+    this.mealService.getMealList().then(val => {
+      this.mealList = val
+      this.updateNutrientValues()
+    })
+  }
+
+  private updateNutrientValues() {
+    this.mealList.forEach(meal => {
+      this.totalCalories += meal.getTotalCalories()
+      this.totalCarbo += meal.getTotalNutrients(Meal.NutrientList.Carbo)
+      this.totalProtein += meal.getTotalNutrients(Meal.NutrientList.Proteins)
+      this.totalFat += meal.getTotalNutrients(Meal.NutrientList.TotalFat)
+    });
   }
 
   public pushSearchPage(meal_id: number){

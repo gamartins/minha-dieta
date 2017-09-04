@@ -14,6 +14,7 @@ import { Food } from "../../model/food";
 import { Meal } from "../../model/meal";
 import { fakeAsync } from "@angular/core/testing";
 import { tick } from "@angular/core/testing";
+import { NutrinfoCardComponent } from "../../components/nutrinfo-card/nutrinfo-card";
 
 describe('MealListPage', () => {
   let comp: MealListPage;
@@ -23,7 +24,10 @@ describe('MealListPage', () => {
   
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MealListPage],
+      declarations: [
+        MealListPage,
+        NutrinfoCardComponent,
+      ],
       imports: [
         IonicModule.forRoot(MealListPage)
       ],
@@ -75,19 +79,19 @@ describe('MealListPage', () => {
     comp.mealList.push(new Meal('123456', 'Almoço', []))
     fixture.detectChanges()
     
-    htmlElement = fixture.debugElement.query(By.css('ion-col')).nativeElement
+    htmlElement = fixture.debugElement.query(By.css('.meal-info')).nativeElement
     htmlElement.click()
 
     expect(htmlElement).toBeDefined()
     expect(navCtrl.push).toHaveBeenCalledWith('MealDetailsPage', { meal_id: '123456'})
   })
 
-  it('should save the selected meal id in MealService open MealDetailsPage', () => {
+  it('should save the selected meal id in MealService when open MealDetailsPage', () => {
     const spy = spyOn(comp, 'publishSelectedMeal')
     comp.mealList.push(new Meal('123456', 'Almoço', []))
     fixture.detectChanges()
     
-    htmlElement = fixture.debugElement.query(By.css('ion-col')).nativeElement
+    htmlElement = fixture.debugElement.query(By.css('.meal-info')).nativeElement
     htmlElement.click()
 
     expect(spy).toHaveBeenCalledWith('123456')
@@ -112,8 +116,22 @@ describe('MealListPage', () => {
     tick()
     fixture.detectChanges()
 
-    let ionCardList = fixture.debugElement.queryAll(By.css('ion-card'))
+    let ionCardList = fixture.debugElement.queryAll(By.css('.meal'))
     expect(ionCardList.length).toBe(2)
+  }))
+
+  it('should show summary of nutritional information', fakeAsync(() => {
+    comp.ionViewWillEnter()
+    tick()
+    fixture.detectChanges()
+
+    htmlElement = fixture.debugElement.query(By.css('nutrinfo-card')).nativeElement
+
+    expect(htmlElement).toBeTruthy()
+    expect(comp.totalCalories).toBe(200)
+    expect(comp.totalProtein).toBe(20)
+    expect(comp.totalCarbo).toBe(40)
+    expect(comp.totalFat).toBe(60)
   }))
 });
 
@@ -126,7 +144,10 @@ class MealServiceMock {
   }
   getMealList(): Promise<Meal[]> {
     return Promise.resolve(
-      [ new Meal('123456', 'Almoço', [ new Food('123', 'Banana'), new Food('456', 'Milk')])]
+      [ new Meal('123456', 'Almoço', [ 
+        new Food('123', 'Banana', 100, 10, 20, 30),
+        new Food('456', 'Milk', 100, 10, 20, 30)])
+      ]
     )
   }
 }

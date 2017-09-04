@@ -46,7 +46,8 @@ export class MealService {
             const meal = new Meal(item.id, item.name, []) 
             if(item.foodList.length > 0 ) {
                 item.foodList.forEach(food => {
-                meal.foodList.push(new Food(food.id, food.name))
+                    meal.foodList.push(new Food(food.id, food.name, food.calories,
+                        food.proteins, food.carbohydrates, food.total_fat))
                 });
             }
             populatedMeals.push(meal)
