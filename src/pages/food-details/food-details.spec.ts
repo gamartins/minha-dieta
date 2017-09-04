@@ -147,16 +147,19 @@ describe('FoodDetailsPage', () => {
     expect(htmlElement).toBeDefined();
   });
 
-  it('should add food to the meal when click add button', () => {
-    spyOn(comp.mealService, 'getMealIds').and.returnValue(['123456'])
-    let spyHtml = spyOn(comp, 'addFoodToMeal').and.callThrough();
-    let spyComp = spyOn(comp.mealService, 'addFood')
-    
+  it('should request meal id', () => {
+    let navParams: NavParams = fixture.debugElement.injector.get(NavParams)
+    comp.ionViewWillEnter()
+    expect(navParams.get).toHaveBeenCalledWith('item_id')
+  })
+
+  it('should call add to meal when click in the add button', () => {
+    let spy = spyOn(comp.mealService, 'addFood')
     htmlElement = fixture.debugElement.query(By.css('ion-fab button')).nativeElement;
     htmlElement.click();
 
-    expect(spyHtml).toHaveBeenCalled();
-    expect(spyComp).toHaveBeenCalledWith(comp.meal_id, comp.food)
+    expect(htmlElement).toBeDefined();
+    expect(spy).toHaveBeenCalled()
   })
 
 });

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavParams, IonicPage, NavController } from 'ionic-angular';
+import { NavParams, IonicPage, NavController, Events } from 'ionic-angular';
 import { FoodService } from "../../services/food/food.service";
 import { Food } from "../../model/food";
 import { MealService } from "../../services/meal/meal.service";
@@ -12,14 +12,12 @@ import { MealService } from "../../services/meal/meal.service";
 export class FoodDetailsPage {
   public item_id: string;
   public food: Food;
-  public meal_id: string;
 
   constructor(
     public navParams: NavParams,
     public navCtlr: NavController,
     public foodService: FoodService,
     public mealService: MealService) {
-      this.item_id = this.navParams.get('item_id');
       this.food = new Food('123', 'Empty');
   }
 
@@ -43,8 +41,7 @@ export class FoodDetailsPage {
   }
 
   addFoodToMeal(){
-    this.meal_id = this.mealService.getMealIds()[0]
-    this.mealService.addFood('123456', this.food)
+    this.mealService.addFood(this.mealService.meal_id, this.food)
     this.navCtlr.pop();
   }
 

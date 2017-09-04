@@ -12,11 +12,13 @@ import { Food } from "../../model/food";
 import { async } from "@angular/core/testing";
 import { MealService } from "../../services/meal/meal.service";
 import { Meal } from "../../model/meal";
+import { fakeAsync } from "@angular/core/testing";
 
 describe('MealDetailsPage', () => {
     let de: DebugElement;
     let comp: MealDetailsPage;
     let htmlElement: HTMLElement;
+    let navParams: NavParams;
     let fixture: ComponentFixture<MealDetailsPage>;
   
     beforeEach(async(() => {
@@ -39,12 +41,18 @@ describe('MealDetailsPage', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(MealDetailsPage);
         comp = fixture.componentInstance;
-        comp.meal = new Meal('123456', [
+        navParams = fixture.debugElement.injector.get(NavParams)
+        comp.meal = new Meal('123456', 'Almoço', [
             new Food('1234', 'Milk', 42, 3.4, 5, 1),
             new Food('5678', 'Couscous', 112, 3.8, 23, 0.2),
             new Food('9012', 'Boiled Egg', 155, 13, 1.1, 11),
             new Food('3456', 'Banana', 89, 1.1, 23, 0.3)])
         fixture.detectChanges()
+    })
+
+    it('Should get the meal id', () => {
+        comp.ionViewWillEnter()
+        expect(navParams.get).toHaveBeenCalled()
     })
 
     it('Should show a FABButton on the screen', async(() => {
@@ -113,9 +121,9 @@ describe('MealDetailsPage', () => {
 });
 
 class MealServiceMock {
-    mealList = [ new Meal('123456', []) ]
+    mealList = [ new Meal('123456', 'Almoço', []) ]
     getMealIds(): Promise<string[]> { return Promise.resolve(['123456']) }
     getMeal(mealId: string):Promise<Meal> { return Promise.resolve(this.mealList[0]) }
     addFood(food: Food) { }
-    removeFood() { }
+    removeFood(meal_id: string, food_id: string): Promise<Meal> { return Promise.resolve(null) }
 }

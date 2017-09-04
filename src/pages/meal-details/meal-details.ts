@@ -18,15 +18,17 @@ export class MealDetailsPage {
     public mealService: MealService) {  }
 
   ionViewWillEnter(){
-    this.mealService.getMealIds().then(ids => {
-      this.mealService.getMeal(ids[0]).then(meal => {
+    const meal_id = this.navParams.get('meal_id')
+    if (meal_id != null ) {
+      this.mealService.getMeal(meal_id).then(meal => {
         this.meal = meal
       })
-    })
+    }
   }
 
   removeFood(food: Food) {
     this.mealService.removeFood(this.meal.id, food.id)
+    .then(meal => this.meal = meal)
   }
 
   getTotalCalories(){
@@ -40,7 +42,7 @@ export class MealDetailsPage {
     return this.round(totalCalories);
   }
 
-  getTotalCarbo(){
+  getTotalCarbo(): number {
     let totalCarbo: number = 0;
     if (this.meal != null ) {
       this.meal.foodList.forEach(food => {

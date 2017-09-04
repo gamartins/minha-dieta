@@ -5,6 +5,8 @@ import { Meal } from "../../model/meal";
 
 @Injectable()
 export class MealService {
+    meal_id = null;
+    
     constructor(public storage: Storage) {
     }
 
@@ -22,11 +24,13 @@ export class MealService {
     }
 
     private generateRandomMeals(): Meal[] {
+        let mealNames = [   'Café da Manhã', 'Lanche', 'Almoço', 
+                            'Lanche da Tarde', 'Janta', 'Ceia']
         let randomMeals: Array<Meal> = []
 
         for (var index = 0; index < 6; index++) {
             const random_key = Math.random().toString(36).substring(2, 15)
-            const new_meal = new Meal(random_key, [])
+            const new_meal = new Meal(random_key,  mealNames[index], [])
             randomMeals.push(new_meal)
             this.saveInStorage(new_meal)
         }
@@ -39,16 +43,30 @@ export class MealService {
 
         return this.storage.forEach(val => {
             const item = JSON.parse(val)
-            const meal = new Meal(item.id, []) 
+            const meal = new Meal(item.id, item.name, []) 
             if(item.foodList.length > 0 ) {
                 item.foodList.forEach(food => {
                 meal.foodList.push(new Food(food.id, food.name))
                 });
             }
             populatedMeals.push(meal)
-        }).then(() => {
-            return Promise.resolve(populatedMeals)
-        })
+        }).then(() => { return Promise.resolve(this.orderMeal(populatedMeals)) })
+    }
+
+    private orderMeal(mealList: Meal[]) {
+        const tempMealList = []
+        mealList.forEach(meal => {
+            switch (meal.name) {
+                case 'Café da Manhã': tempMealList[0] = meal; break;
+                case 'Lanche': tempMealList[1] = meal; break;
+                case 'Almoço': tempMealList[2] = meal; break;
+                case 'Lanche da Tarde': tempMealList[3] = meal; break;
+                case 'Janta': tempMealList[4] = meal; break;
+                case 'Ceia': tempMealList[5] = meal; break;
+            }
+        });
+
+        return tempMealList;
     }
 
     private saveInStorage(meal: Meal) {
@@ -58,9 +76,12 @@ export class MealService {
     public getMeal(mealId: string): Promise<Meal> {
         return this.storage.get(mealId).then(val => {
             const item = JSON.parse(val)
-            const meal: Meal = new Meal(item.id, [])
+            const meal: Meal = new Meal(item.id, item.name, [])
             item.foodList.forEach(food => {
-                meal.foodList.push(new Food(food.id, food.name))
+                meal.foodList.push(
+                    new Food(food.id, food.name, food.calories,
+                        food.proteins, food.carbohydrates, 
+                        food.total_fat, food.sodium))
             });
             return meal
         })
@@ -73,9 +94,9 @@ export class MealService {
         })
     }
 
-    public removeFood(mealId: string, foodId: string) {
+    public removeFood(mealId: string, foodId: string): Promise<Meal> {
         let positionInArray = -1
-        this.getMeal(mealId).then(val => {
+        return this.getMeal(mealId).then(val => {
             const meal: Meal = val
             for (var index = 0; index < meal.foodList.length; index++) {
                 var food = meal.foodList[index];
@@ -90,6 +111,8 @@ export class MealService {
             }
 
             this.saveInStorage(meal)
+
+            return meal
         })
     }
 

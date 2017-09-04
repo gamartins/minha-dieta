@@ -50,7 +50,7 @@ describe('MealListPage', () => {
   })
 
   it('should open SearchPage when click the add button', () => {
-    comp.mealList.push(new Meal('123456', []))
+    comp.mealList.push(new Meal('123456', 'Almoço', []))
     fixture.detectChanges()
 
     htmlElement = fixture.debugElement.query(By.css('ion-card-content button')).nativeElement
@@ -60,23 +60,60 @@ describe('MealListPage', () => {
     expect(navCtrl.push).toHaveBeenCalled()
   })
 
-  it('should open MealDetailsPage when click the meal name', () => {
-    comp.mealList.push(new Meal('123456', []))
+  it('should save the selected meal id in MealService when open SearchPage', () => {
+    const spy = spyOn(comp, 'publishSelectedMeal')
+    comp.mealList.push(new Meal('123456', 'Almoço', []))
     fixture.detectChanges()
     
-    htmlElement = fixture.debugElement.query(By.css('ion-card-header')).nativeElement
+    htmlElement = fixture.debugElement.query(By.css('ion-card-content button')).nativeElement
+    htmlElement.click()
+
+    expect(spy).toHaveBeenCalledWith('123456')
+  })
+
+  it('should open MealDetailsPage when click the meal name', () => {
+    comp.mealList.push(new Meal('123456', 'Almoço', []))
+    fixture.detectChanges()
+    
+    htmlElement = fixture.debugElement.query(By.css('ion-col')).nativeElement
     htmlElement.click()
 
     expect(htmlElement).toBeDefined()
-    expect(navCtrl.push).toHaveBeenCalled()
+    expect(navCtrl.push).toHaveBeenCalledWith('MealDetailsPage', { meal_id: '123456'})
+  })
+
+  it('should save the selected meal id in MealService open MealDetailsPage', () => {
+    const spy = spyOn(comp, 'publishSelectedMeal')
+    comp.mealList.push(new Meal('123456', 'Almoço', []))
+    fixture.detectChanges()
+    
+    htmlElement = fixture.debugElement.query(By.css('ion-col')).nativeElement
+    htmlElement.click()
+
+    expect(spy).toHaveBeenCalledWith('123456')
   })
 
   it('should show how many foods are in the meal', fakeAsync(() => {
-    comp.mealList = [new Meal('123456', [ new Food('123', 'Banana'), new Food('456', 'Milk')])]
+    comp.mealList = [new Meal('123456', 'Almoço', [ new Food('123', 'Banana'), new Food('456', 'Milk')])]
     fixture.detectChanges()
     
     htmlElement = fixture.debugElement.query(By.css('ion-card-content')).nativeElement
     expect(htmlElement.textContent).toContain('2 alimentos')
+  }))
+
+  it('should show meals', fakeAsync(() => {
+    let promise = Promise.resolve([
+      new Meal('123456', 'Almoço', [ new Food('123', 'Banana'), new Food('456', 'Milk')]),
+      new Meal('654321', 'Janta', [ new Food('123', 'Banana'), new Food('456', 'Milk')]),
+    ])
+
+    spyOn(comp.mealService, 'getMealList').and.returnValue(promise)
+    comp.ionViewWillEnter()
+    tick()
+    fixture.detectChanges()
+
+    let ionCardList = fixture.debugElement.queryAll(By.css('ion-card'))
+    expect(ionCardList.length).toBe(2)
   }))
 });
 
@@ -84,12 +121,12 @@ class MealServiceMock {
   getMealIds(): Promise<string[]> { return Promise.resolve(['123456']) }
   getMeal(mealId: string): Promise<Meal> { 
     return Promise.resolve(
-      new Meal('123456', [ new Food('123', 'Banana'), new Food('456', 'Milk')])
+      new Meal('123456', 'Almoço', [ new Food('123', 'Banana'), new Food('456', 'Milk')])
     )
   }
   getMealList(): Promise<Meal[]> {
     return Promise.resolve(
-      [ new Meal('123456', [ new Food('123', 'Banana'), new Food('456', 'Milk')])]
+      [ new Meal('123456', 'Almoço', [ new Food('123', 'Banana'), new Food('456', 'Milk')])]
     )
   }
 }

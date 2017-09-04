@@ -6,14 +6,18 @@
 
 <ion-content padding>
   <ion-card *ngFor="let meal of mealList; let i = index">
-      <ion-card-header (click)="pushMealDetailsPage(i)">
-        Café da Manhã
-      </ion-card-header>
-      <ion-card-content>
-        {{ getAmountFood(i) }} alimentos
-        <button ion-fab mini (click)="pushSearchPage()">
-          <ion-icon name="add"></ion-icon>
-        </button>
+      <ion-card-content class="meal-amount" >
+        <ion-row>
+          <ion-col class="meal-info" (click)="pushMealDetailsPage(meal.id)">
+            <span class="meal-name">{{ meal.name }}</span><br>
+            <span>{{ getAmountFood(meal.id) }} alimentos</span>
+          </ion-col>
+          <ion-col>
+            <button ion-fab mini (click)="pushSearchPage(meal.id)" class="add-button">
+              <ion-icon name="add"></ion-icon>
+            </button>
+          </ion-col>
+        </ion-row>
       </ion-card-content>
     </ion-card>
 </ion-content>

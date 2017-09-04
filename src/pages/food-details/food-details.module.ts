@@ -6,4 +6,4 @@ import { FoodDetailsPage } from './food-details';
   declarations: [FoodDetailsPage],
   imports: [IonicPageModule.forChild(FoodDetailsPage)],
 })
-export class HomePageModule { }
+export class FoodDetailsPageModule { }

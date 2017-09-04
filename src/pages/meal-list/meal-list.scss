@@ -1,3 +1,22 @@
 page-meal-list {
-
+    ion-card {
+        .meal-amount {
+            padding: 10px;
+        }
+        .meal-name {
+            color: color($colors, primary);
+            font-weight: bold;
+            font-size: 1.3em;
+            padding-bottom: 0px;
+        }
+    
+        .meal-amount {
+            color: gray;
+        }
+    
+        .add-button {
+            float: right;
+        }
+    }
+    
 }

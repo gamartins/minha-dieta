@@ -41,7 +41,7 @@ describe('MealService', () => {
     }))
 
     it('Should return a meal with the id searched', () => {
-        let mealList = [ new Meal('123456', [ new Food('1234', 'Milk'), new Food('5678', 'Meat') ]) ]
+        let mealList = [ new Meal('123456', 'Almoço', [ new Food('1234', 'Milk'), new Food('5678', 'Meat') ]) ]
         mealService.getMeal('123456').then(val => {
             expect(mealList[0]).toEqual(val)
         })
@@ -83,7 +83,7 @@ describe('MealService', () => {
 });
 
 class StorageMock {
-    private mealList = '{"id":"123456","foodList":[{"id":"1234","name":"Milk"},{"id":"5678","name":"Meat"}]}'
+    private mealList = '{"id":"123456","name":"Almoço","foodList":[{"id":"1234","name":"Milk"},{"id":"5678","name":"Meat"}]}'
     public get(key: string): Promise<any> { return Promise.resolve(this.mealList) }
     public keys(): Promise<string[]> { return Promise.resolve(['123456']) }
     public set(key: string, val: string): Promise<any> {
