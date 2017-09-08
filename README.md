@@ -1,26 +1,37 @@
-This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
+# MinhaDieta
+My diet allows you to seek the detailed information of a food to assemble a diet with the individual characteristics obtaining a better result.
 
-## How to use this template
+## Table of Contents
+ - [Getting Started](#getting-started)
+ - [Use Cases](#use-cases)
+ - [App Preview](#app-preview)
 
-*This template does not work on its own*. The shared files for each starter are found in the [ionic2-app-base repo](https://github.com/ionic-team/ionic2-app-base).
+## Getting Started
+* Clone this repository: `git clone https://github.com/gamartins/minha-dieta.git`
+* Run npm install from the project root.
+* Install the ionic CLI ( `npm install -g ionic` )
+* Configure the file `api.connection.data.ts`
+* Run `ionic cordova run` in a terminal from the project root.
 
-To use this template, either create a new ionic project using the ionic node.js utility, or copy the files from this repository into the [Starter App Base](https://github.com/ionic-team/ionic2-app-base).
+## Use Cases
+* Nutrinfo Component - [ [Template](https://github.com/gamartins/minha-dieta/blob/master/src/components/nutrinfo-card/nutrinfo-card.html) | [Code](https://github.com/gamartins/minha-dieta/blob/master/src/components/nutrinfo-card/nutrinfo-card.ts) | [Tests](https://github.com/gamartins/minha-dieta/blob/master/src/components/nutrinfo-card/nutrinfo-card.spec.ts) ]
+* FoodDetails Page - [ [Template](https://github.com/gamartins/minha-dieta/blob/master/src/pages/food-details/food-details.html) | [Code](https://github.com/gamartins/minha-dieta/blob/master/src/pages/food-details/food-details.ts) | [Tests](https://github.com/gamartins/minha-dieta/blob/master/src/pages/food-details/food-details.spec.ts) ]
+* MealDetails Page - [ [Template](https://github.com/gamartins/minha-dieta/blob/master/src/pages/meal-details/meal-details.html) | [Code](https://github.com/gamartins/minha-dieta/blob/master/src/pages/meal-details/meal-details.ts) | [Tests](https://github.com/gamartins/minha-dieta/blob/master/src/pages/meal-details/meal-details.spec.ts) ]
+* MealList Page - [ [Template](https://github.com/gamartins/minha-dieta/blob/master/src/pages/meal-list/meal-list.html) | [Code](https://github.com/gamartins/minha-dieta/blob/master/src/pages/meal-list/meal-list.ts) | [Tests](https://github.com/gamartins/minha-dieta/blob/master/src/pages/meal-list/meal-list.spec.ts) ]
+* Search Page - [ [Template](https://github.com/gamartins/minha-dieta/blob/master/src/pages/search/search.html) | [Code](https://github.com/gamartins/minha-dieta/blob/master/src/pages/search/search.ts) | [Tests](https://github.com/gamartins/minha-dieta/blob/master/src/pages/search/search.spec.ts) ]
 
-### With the Ionic CLI:
+## App Preview
+All app preview screenshots were taken by running `ionic serve --lab`.
+* [FoodDetails Page](https://github.com/gamartins/minha-dieta/blob/master/src/pages/food-details/food-details.html)
+<img src="resources/screenshots/FoodDetailsPage.png" alt="FoodDetailsPage">
+* [MealDetails Page](https://github.com/gamartins/minha-dieta/blob/master/src/pages/meal-details/meal-details.html)
+<img src="resources/screenshots/MealDetailsPage.png" alt="MealDetailsPage">
+* [MealList Page](https://github.com/gamartins/minha-dieta/blob/master/src/pages/meal-list/meal-list.html)
+<img src="resources/screenshots/MealListPage.png" alt="MealListPage">
+* [Search Page](https://github.com/gamartins/minha-dieta/blob/master/src/pages/search/search.html)
+<img src="resources/screenshots/SearchPage.png" alt="SearchPage">
+* To see more images of the app, check out the [screenshots directory](https://github.com/gamartins/minha-dieta/tree/master/resources/screenshots)!
 
-Take the name after `ionic2-starter-`, and that is the name of the template to be used when using the `ionic start` command below:
-
-```bash
-$ sudo npm install -g ionic cordova
-$ ionic start myBlank blank
-```
-
-Then, to run it, cd into `myBlank` and run:
-
-```bash
-$ ionic cordova platform add ios
-$ ionic cordova run ios
-```
-
-Substitute ios for android if not on a Mac.
-
+## Deploying
+* Install the platform plugin `cordova platform add [android|ios]`
+* Run `ionic cordova run [android|ios] --prod`
