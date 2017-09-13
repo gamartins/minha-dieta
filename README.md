@@ -20,6 +20,7 @@ My diet allows you to seek the detailed information of a food to assemble a diet
 * MealDetails Page - [ [Template](https://github.com/gamartins/minha-dieta/blob/master/src/pages/meal-details/meal-details.html) | [Code](https://github.com/gamartins/minha-dieta/blob/master/src/pages/meal-details/meal-details.ts) | [Tests](https://github.com/gamartins/minha-dieta/blob/master/src/pages/meal-details/meal-details.spec.ts) ]
 * MealList Page - [ [Template](https://github.com/gamartins/minha-dieta/blob/master/src/pages/meal-list/meal-list.html) | [Code](https://github.com/gamartins/minha-dieta/blob/master/src/pages/meal-list/meal-list.ts) | [Tests](https://github.com/gamartins/minha-dieta/blob/master/src/pages/meal-list/meal-list.spec.ts) ]
 * Search Page - [ [Template](https://github.com/gamartins/minha-dieta/blob/master/src/pages/search/search.html) | [Code](https://github.com/gamartins/minha-dieta/blob/master/src/pages/search/search.ts) | [Tests](https://github.com/gamartins/minha-dieta/blob/master/src/pages/search/search.spec.ts) ]
+* GroceryList Page - [ [Template](https://github.com/gamartins/minha-dieta/blob/master/src/pages/grocery-list/grocery-list.html) | [Code](https://github.com/gamartins/minha-dieta/blob/master/src/pages/grocery-list/grocery-list.ts) | [Tests](https://github.com/gamartins/minha-dieta/blob/master/src/pages/grocery-list/grocery-list.spec.ts) ]
 
 ## App Preview
 All app preview screenshots were taken by running `ionic serve --lab`.
@@ -34,6 +35,9 @@ All app preview screenshots were taken by running `ionic serve --lab`.
 
 * [Search Page](https://github.com/gamartins/minha-dieta/blob/master/src/pages/search/search.html)
 <img src="resources/screenshots/SearchPage.png" alt="SearchPage">
+
+* [GroceryList Page](https://github.com/gamartins/minha-dieta/blob/master/src/pages/grocery-list/grocery-list.html)
+<img src="resources/screenshots/GroceryListPage.png" alt="GroceryListPage">
 
 * To see more images of the app, check out the [screenshots directory](https://github.com/gamartins/minha-dieta/tree/master/resources/screenshots)!
 
