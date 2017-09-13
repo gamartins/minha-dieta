@@ -28,12 +28,20 @@ export class MealListPage {
   }
 
   private updateNutrientValues() {
+    this.resetNutrients()
     this.mealList.forEach(meal => {
       this.totalCalories += meal.getTotalCalories()
       this.totalCarbo += meal.getTotalNutrients(Meal.NutrientList.Carbo)
       this.totalProtein += meal.getTotalNutrients(Meal.NutrientList.Proteins)
       this.totalFat += meal.getTotalNutrients(Meal.NutrientList.TotalFat)
     });
+  }
+
+  private resetNutrients() {
+    this.totalCalories = 0;
+    this.totalCarbo = 0;
+    this.totalFat = 0;
+    this.totalFat = 0;
   }
 
   public pushSearchPage(meal_id: number){
