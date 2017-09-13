@@ -46,7 +46,7 @@ describe('NutrinfoCard Component', () => {
         fixture.detectChanges()
 
         el = fixture.debugElement.query(By.css('ion-col:nth-child(1)')).nativeElement
-        expect(el.textContent).toBe('Carbo20g')
+        expect(el.textContent).toBe('Carbo20.0g')
     })
 
     it('should show the total of proteins', () => {
@@ -54,7 +54,7 @@ describe('NutrinfoCard Component', () => {
         fixture.detectChanges()
 
         el = fixture.debugElement.query(By.css('ion-col:nth-child(2)')).nativeElement
-        expect(el.textContent).toBe('Proteins20g')
+        expect(el.textContent).toBe('Proteins20.0g')
     })
 
     it('should show the total of fat', () => {
@@ -62,6 +62,24 @@ describe('NutrinfoCard Component', () => {
         fixture.detectChanges()
 
         el = fixture.debugElement.query(By.css('ion-col:nth-child(3)')).nativeElement
-        expect(el.textContent).toBe('Fat20g')
+        expect(el.textContent).toBe('Fat20.0g')
+    })
+
+    it('show show nutrients to one decimal places', () => {
+        comp.carbo = 75.99999
+        comp.proteins = 10.333333
+        comp.total_fat = 0.8999999
+        fixture.detectChanges()
+
+        el = fixture.debugElement.query(By.css('ion-col:nth-child(1)')).nativeElement
+        expect(el.textContent).toBe('Carbo76.0g')
+
+        el = fixture.debugElement.query(By.css('ion-col:nth-child(2)')).nativeElement
+        expect(el.textContent).toBe('Proteins10.3g')
+
+        el = fixture.debugElement.query(By.css('ion-col:nth-child(3)')).nativeElement
+        expect(el.textContent).toBe('Fat0.9g')
+        
+        
     })
 })

@@ -5,10 +5,10 @@ import { Component, Input, Output } from '@angular/core';
   templateUrl: 'nutrinfo-card.html'
 })
 export class NutrinfoCardComponent {
-  @Input('calories') calories: number;
-  @Input('protein') proteins: number;
-  @Input('carbo') carbo: number;
-  @Input('fat') total_fat: number;
+  @Input('calories') calories: number = 0;
+  @Input('protein') proteins: number = 0;
+  @Input('carbo') carbo: number = 0;
+  @Input('fat') total_fat: number = 0;
 
   constructor() { }
 

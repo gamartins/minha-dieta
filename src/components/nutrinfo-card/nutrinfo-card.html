@@ -3,9 +3,9 @@
   <hr>
   <ion-grid>
     <ion-row>
-      <ion-col text-center>Carbo<br>{{ carbo }}g</ion-col>
-      <ion-col text-center>Proteins<br>{{ proteins }}g</ion-col>
-      <ion-col text-center>Fat<br>{{ total_fat }}g</ion-col>
+      <ion-col text-center>Carbo<br>{{ carbo.toFixed(1) }}g</ion-col>
+      <ion-col text-center>Proteins<br>{{ proteins.toFixed(1) }}g</ion-col>
+      <ion-col text-center>Fat<br>{{ total_fat.toFixed(1) }}g</ion-col>
     </ion-row>
   </ion-grid>
 </ion-card>
