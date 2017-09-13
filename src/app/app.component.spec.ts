@@ -10,9 +10,11 @@ import {
   StatusBarMock,
   SplashScreenMock
 } from '../../test-config/mocks-ionic';
+import { ComponentFixture } from "@angular/core/testing";
+import { By } from "@angular/platform-browser";
 
 describe('MyApp Component', () => {
-  let fixture;
+  let fixture: ComponentFixture<MyApp>;
   let component;
 
   beforeEach(async(() => {
@@ -34,8 +36,8 @@ describe('MyApp Component', () => {
     component = fixture.componentInstance;
   });
 
-  // it('should be created', () => {
-  //   expect(component instanceof MyApp).toBe(true);
-  // });
+  it('should be created', () => {
+    expect(component instanceof MyApp).toBe(true);
+  });
 
 });

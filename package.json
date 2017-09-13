@@ -51,7 +51,7 @@
         "@types/node": "^8.0.22",
         "angular2-template-loader": "^0.6.2",
         "html-loader": "^0.5.1",
-        "ionic": "3.9.2",
+        "ionic": "3.10.1",
         "jasmine": "^2.7.0",
         "jasmine-spec-reporter": "^4.2.1",
         "karma": "^1.7.0",
